@@ -18,5 +18,15 @@ namespace NewEnvy.Core
       {
          _unityContainer = new UnityContainer();
       }
+
+      public static void RegisterInstance<T>( T instance )
+      {
+         _unityContainer.RegisterInstance( instance );
+      }
+
+      public static T Resolve<T>()
+      {
+         return _unityContainer.Resolve<T>();
+      }
    }
 }

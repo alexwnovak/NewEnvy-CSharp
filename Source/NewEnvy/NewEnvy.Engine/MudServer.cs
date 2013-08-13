@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using NewEnvy.Core;
 
 namespace NewEnvy.Engine
 {
@@ -20,6 +21,8 @@ namespace NewEnvy.Engine
 
          try
          {
+            var tcpServer = Dependency.Resolve<ITcpServer>();
+
             server = new TcpListener( _localAddress, _port );
 
             server.Start();
