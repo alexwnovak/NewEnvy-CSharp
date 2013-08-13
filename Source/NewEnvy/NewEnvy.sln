@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewEnvy.EntryPoint", "NewEn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewEnvy.Engine.Test", "NewEnvy.Engine.Test\NewEnvy.Engine.Test.csproj", "{51508402-B5F0-4530-B0D1-2171C104B52D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewEnvy.Core", "NewEnvy.Core\NewEnvy.Core.csproj", "{628F0249-B854-4571-B5D3-407E48212E52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{51508402-B5F0-4530-B0D1-2171C104B52D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51508402-B5F0-4530-B0D1-2171C104B52D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51508402-B5F0-4530-B0D1-2171C104B52D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{628F0249-B854-4571-B5D3-407E48212E52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{628F0249-B854-4571-B5D3-407E48212E52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{628F0249-B854-4571-B5D3-407E48212E52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{628F0249-B854-4571-B5D3-407E48212E52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

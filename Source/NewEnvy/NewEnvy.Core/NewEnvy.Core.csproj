@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D087F2BF-241C-4117-97C9-4F2FC8B5B02A}</ProjectGuid>
+    <ProjectGuid>{628F0249-B854-4571-B5D3-407E48212E52}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NewEnvy.Engine</RootNamespace>
-    <AssemblyName>NewEnvy.Engine</AssemblyName>
+    <RootNamespace>NewEnvy.Core</RootNamespace>
+    <AssemblyName>NewEnvy.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MudServer.cs" />
+    <Compile Include="Dependency.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

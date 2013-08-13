@@ -54,6 +54,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NewEnvy.Core\NewEnvy.Core.csproj">
+      <Project>{628f0249-b854-4571-b5d3-407e48212e52}</Project>
+      <Name>NewEnvy.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NewEnvy.Engine\NewEnvy.Engine.csproj">
       <Project>{d087f2bf-241c-4117-97c9-4f2fc8b5b02a}</Project>
       <Name>NewEnvy.Engine</Name>

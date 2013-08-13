@@ -11,19 +11,17 @@ namespace NewEnvy.Engine
 {
    public class MudServer
    {
+      private static readonly int _port = 13000;
+      private static readonly IPAddress _localAddress = IPAddress.Loopback;
+
       public void Run()
       {
          TcpListener server = null;
+
          try
          {
-            // Set the TcpListener on port 13000.
-            Int32 port = 13000;
-            IPAddress localAddr = IPAddress.Parse( "127.0.0.1" );
+            server = new TcpListener( _localAddress, _port );
 
-            // TcpListener server = new TcpListener(port);
-            server = new TcpListener( localAddr, port );
-
-            // Start listening for client requests.
             server.Start();
 
             // Buffer for reading data
@@ -81,7 +79,6 @@ namespace NewEnvy.Engine
          }
          finally
          {
-            // Stop listening for new clients.
             server.Stop();
          }
 
