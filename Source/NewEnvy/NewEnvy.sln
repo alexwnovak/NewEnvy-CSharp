@@ -1,7 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{7CFD1531-4715-4A5B-A614-1664DAE33ECA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewEnvy.Engine", "NewEnvy.Engine\NewEnvy.Engine.csproj", "{D087F2BF-241C-4117-97C9-4F2FC8B5B02A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewEnvy.EntryPoint", "NewEnvy.EntryPoint\NewEnvy.EntryPoint.csproj", "{93321117-5C98-47AE-91A4-B4F9AA070F08}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D087F2BF-241C-4117-97C9-4F2FC8B5B02A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D087F2BF-241C-4117-97C9-4F2FC8B5B02A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D087F2BF-241C-4117-97C9-4F2FC8B5B02A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D087F2BF-241C-4117-97C9-4F2FC8B5B02A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93321117-5C98-47AE-91A4-B4F9AA070F08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93321117-5C98-47AE-91A4-B4F9AA070F08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93321117-5C98-47AE-91A4-B4F9AA070F08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93321117-5C98-47AE-91A4-B4F9AA070F08}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
