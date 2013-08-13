@@ -17,15 +17,13 @@ namespace NewEnvy.Engine
 
       public void Run()
       {
-         TcpListener server = null;
+         ITcpServer tcpServer = null;
 
          try
          {
-            var tcpServer = Dependency.Resolve<ITcpServer>();
+            tcpServer = Dependency.Resolve<ITcpServer>();
 
-            server = new TcpListener( _localAddress, _port );
-
-            server.Start();
+            tcpServer.Start( _port );
 
             // Buffer for reading data
             Byte[] bytes = new Byte[256];
@@ -38,7 +36,7 @@ namespace NewEnvy.Engine
 
                // Perform a blocking call to accept requests. 
                // You could also user server.AcceptSocket() here.
-               TcpClient client = server.AcceptTcpClient();
+               TcpClient client = tcpServer.Accept();
                Console.WriteLine( "Connected!" );
 
                data = null;
@@ -82,7 +80,7 @@ namespace NewEnvy.Engine
          }
          finally
          {
-            server.Stop();
+            tcpServer.Stop();
          }
 
          Console.WriteLine( "\nHit enter to continue..." );

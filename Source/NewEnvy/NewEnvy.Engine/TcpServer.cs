@@ -12,5 +12,15 @@ namespace NewEnvy.Engine
       {
          throw new NotImplementedException();
       }
+
+      public void Stop()
+      {
+         throw new NotImplementedException();
+      }
+
+      public System.Net.Sockets.TcpClient Accept()
+      {
+         throw new NotImplementedException();
+      }
    }
 }
