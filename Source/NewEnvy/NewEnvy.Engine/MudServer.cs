@@ -8,7 +8,7 @@ namespace NewEnvy.Engine
       public bool IsRunning
       {
          get;
-         set;
+         private set;
       }
 
       public void Run()
@@ -18,7 +18,8 @@ namespace NewEnvy.Engine
          var connectionListener = Dependency.Resolve<IConnectionListener>();
          connectionListener.StartAsync();
 
-         int loops = 0;
+         var clientManager = new ClientManager();
+         clientManager.WatchForConnections();
 
          while ( IsRunning )
          {
@@ -28,11 +29,6 @@ namespace NewEnvy.Engine
             GlobalCommandQueue.ProcessCommands();
 
             serverClock.EndClockAndWait();
-
-            if ( ++loops >= 10 )
-            {
-               IsRunning = false;
-            }
          }
          
          //var tcpServer = Dependency.Resolve<IConnectionListener>();
@@ -89,6 +85,11 @@ namespace NewEnvy.Engine
 
          //Console.WriteLine( "\nHit enter to continue..." );
          //Console.Read();
+      }
+
+      public void Stop()
+      {
+         IsRunning = false;
       }
    }
 }

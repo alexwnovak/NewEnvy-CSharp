@@ -24,7 +24,7 @@ namespace NewEnvy.Engine.Test
          Dependency.RegisterInstance( connectionListenerMock.Object );
 
          //var serverClockMock = new Mock<IServerClock>();
-         //serverClockMock.Setup( scm => scm.Wait() ).Callback( () => mudServer.IsRunning = false );
+         //serverClockMock.Setup( scm => scm.Wait() ).Callback( () => mudServer.Stop() );
          //Dependency.RegisterInstance( serverClockMock.Object );
 
          // Test
