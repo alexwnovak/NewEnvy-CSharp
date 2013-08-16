@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using NewEnvy.Core;
 
 namespace NewEnvy.Engine
@@ -22,14 +18,13 @@ namespace NewEnvy.Engine
          //     a. On connection, spin up a connection thread. This is a conduit from the user to the server
          //     b. This guy receives data from each individual user and incorporates the commands into the game ecosystem
          
-         ITcpServer tcpServer = Dependency.Resolve<ITcpServer>();
+         var tcpServer = Dependency.Resolve<ITcpServer>();
 
          try
          {
             tcpServer.Start( _port );
 
-            byte[] bytes = new byte[256];
-            string data = null;
+            var bytes = new byte[256];
 
             while ( true )
             {
@@ -39,19 +34,15 @@ namespace NewEnvy.Engine
 
                Console.WriteLine( "Connected!" );
 
-               data = null;
-
-               // Get a stream object for reading and writing
                NetworkStream stream = client.GetStream();
 
-               int i;
-
-               // Loop to receive all the data sent by the client. 
                try
                {
-                  while ( ( i = stream.Read( bytes, 0, bytes.Length ) ) != 0 )
+                  int bytesRead;
+
+                  while ( ( bytesRead = stream.Read( bytes, 0, bytes.Length ) ) != 0 )
                   {
-                     data = System.Text.Encoding.ASCII.GetString( bytes, 0, i );
+                     string data = System.Text.Encoding.ASCII.GetString( bytes, 0, bytesRead );
                      Console.WriteLine( "Received: {0}", data );
 
                      data = data.ToUpper();
