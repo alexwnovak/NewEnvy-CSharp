@@ -15,11 +15,14 @@ namespace NewEnvy.Engine.Test
       }
 
       [TestMethod]
-      public void Run_HappyPath_CallsServerClock()
+      public void Run_HappyPath_StartsServerAndRunsMainLoop()
       {
          var mudServer = new MudServer();
          
          // Setup
+
+         var connectionListenerMock = new Mock<IConnectionListener>();
+         Dependency.RegisterInstance( connectionListenerMock.Object );
 
          var serverClockMock = new Mock<IServerClock>();
          serverClockMock.Setup( scm => scm.Wait() ).Callback( () => mudServer.IsRunning = false );
@@ -31,6 +34,7 @@ namespace NewEnvy.Engine.Test
 
          // Assert
 
+         connectionListenerMock.Verify( clm => clm.StartAsync(), Times.Once() );
          serverClockMock.Verify( scm => scm.Wait(), Times.Once() );
       }
 
