@@ -37,16 +37,5 @@ namespace NewEnvy.Engine.Test
          connectionListenerMock.Verify( clm => clm.StartAsync(), Times.Once() );
          serverClockMock.Verify( scm => scm.Wait(), Times.Once() );
       }
-
-      //[TestMethod]
-      //public void Run_()
-      //{
-      //   var tcpServerMock = new Mock<ITcpServer>();
-      //   Dependency.RegisterInstance( tcpServerMock.Object );
-
-      //   var mudServer = new MudServer();
-
-      //   mudServer.Run();
-      //}
    }
 }
