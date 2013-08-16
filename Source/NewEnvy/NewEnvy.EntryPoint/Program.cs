@@ -6,9 +6,7 @@ namespace NewEnvy.EntryPoint
    {
       public static void Main()
       {
-         var mudServer = new MudServer();
-
-         mudServer.Run();
+         new MudApplication().Main();
       }
    }
 }

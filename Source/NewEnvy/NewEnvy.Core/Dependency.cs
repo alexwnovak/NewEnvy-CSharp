@@ -24,6 +24,11 @@ namespace NewEnvy.Core
          _unityContainer.RegisterInstance( instance );
       }
 
+      public static void RegisterType<TFrom, TTo>() where TTo : TFrom
+      {
+         _unityContainer.RegisterType<TFrom, TTo>();
+      }
+
       public static T Resolve<T>()
       {
          return _unityContainer.Resolve<T>();

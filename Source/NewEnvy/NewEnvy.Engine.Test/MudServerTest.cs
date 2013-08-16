@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NewEnvy.Core;
 using Moq;
 
@@ -24,9 +23,9 @@ namespace NewEnvy.Engine.Test
          var connectionListenerMock = new Mock<IConnectionListener>();
          Dependency.RegisterInstance( connectionListenerMock.Object );
 
-         var serverClockMock = new Mock<IServerClock>();
-         serverClockMock.Setup( scm => scm.Wait() ).Callback( () => mudServer.IsRunning = false );
-         Dependency.RegisterInstance( serverClockMock.Object );
+         //var serverClockMock = new Mock<IServerClock>();
+         //serverClockMock.Setup( scm => scm.Wait() ).Callback( () => mudServer.IsRunning = false );
+         //Dependency.RegisterInstance( serverClockMock.Object );
 
          // Test
 
@@ -35,7 +34,7 @@ namespace NewEnvy.Engine.Test
          // Assert
 
          connectionListenerMock.Verify( clm => clm.StartAsync(), Times.Once() );
-         serverClockMock.Verify( scm => scm.Wait(), Times.Once() );
+         //serverClockMock.Verify( scm => scm.Wait(), Times.Once() );
       }
    }
 }

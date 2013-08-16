@@ -2,9 +2,12 @@
 {
    public class ServerClock : IServerClock
    {
-      public void Wait()
+      public void StartClock()
       {
-         throw new System.NotImplementedException();
+      }
+
+      public void EndClockAndWait()
+      {
       }
    }
 }

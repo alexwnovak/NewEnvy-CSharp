@@ -2,6 +2,8 @@
 {
    public interface IServerClock
    {
-      void Wait();
+      void StartClock();
+
+      void EndClockAndWait();
    }
 }

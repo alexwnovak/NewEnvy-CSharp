@@ -46,8 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalCommandQueue.cs" />
     <Compile Include="IServerClock.cs" />
     <Compile Include="IConnectionListener.cs" />
+    <Compile Include="MudApplication.cs" />
     <Compile Include="MudServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerClock.cs" />

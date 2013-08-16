@@ -1,4 +1,5 @@
-﻿using NewEnvy.Core;
+﻿using System;
+using NewEnvy.Core;
 
 namespace NewEnvy.Engine
 {
@@ -17,10 +18,21 @@ namespace NewEnvy.Engine
          var connectionListener = Dependency.Resolve<IConnectionListener>();
          connectionListener.StartAsync();
 
+         int loops = 0;
+
          while ( IsRunning )
          {
             var serverClock = Dependency.Resolve<IServerClock>();
-            serverClock.Wait();
+            serverClock.StartClock();
+
+            GlobalCommandQueue.ProcessCommands();
+
+            serverClock.EndClockAndWait();
+
+            if ( ++loops >= 10 )
+            {
+               IsRunning = false;
+            }
          }
          
          //var tcpServer = Dependency.Resolve<IConnectionListener>();
