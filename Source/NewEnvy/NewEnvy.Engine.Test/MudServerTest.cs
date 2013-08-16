@@ -15,14 +15,34 @@ namespace NewEnvy.Engine.Test
       }
 
       [TestMethod]
-      public void Run_()
+      public void Run_HappyPath_CallsServerClock()
       {
-         var tcpServerMock = new Mock<ITcpServer>();
-         Dependency.RegisterInstance( tcpServerMock.Object );
-
          var mudServer = new MudServer();
+         
+         // Setup
+
+         var serverClockMock = new Mock<IServerClock>();
+         serverClockMock.Setup( scm => scm.Wait() ).Callback( () => mudServer.IsRunning = false );
+         Dependency.RegisterInstance( serverClockMock.Object );
+
+         // Test
 
          mudServer.Run();
+
+         // Assert
+
+         serverClockMock.Verify( scm => scm.Wait(), Times.Once() );
       }
+
+      //[TestMethod]
+      //public void Run_()
+      //{
+      //   var tcpServerMock = new Mock<ITcpServer>();
+      //   Dependency.RegisterInstance( tcpServerMock.Object );
+
+      //   var mudServer = new MudServer();
+
+      //   mudServer.Run();
+      //}
    }
 }

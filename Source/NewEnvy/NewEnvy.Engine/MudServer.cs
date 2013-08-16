@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using NewEnvy.Core;
 
 namespace NewEnvy.Engine
@@ -11,8 +12,24 @@ namespace NewEnvy.Engine
       private static readonly int _port = 13000;
       private static readonly IPAddress _localAddress = IPAddress.Loopback;
 
+      public bool IsRunning
+      {
+         get;
+         set;
+      }
+
       public void Run()
       {
+         IsRunning = true;
+         var serverClock = Dependency.Resolve<IServerClock>();
+
+         while ( IsRunning )
+         {
+            serverClock.Wait();
+         }
+
+         return;
+
          // Steps:
          //   1. Start up the server to accept incoming connections
          //     a. On connection, spin up a connection thread. This is a conduit from the user to the server
