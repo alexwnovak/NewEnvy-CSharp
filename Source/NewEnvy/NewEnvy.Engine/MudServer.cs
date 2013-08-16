@@ -17,26 +17,26 @@ namespace NewEnvy.Engine
 
       public void Run()
       {
-         ITcpServer tcpServer = null;
+         // Steps:
+         //   1. Start up the server to accept incoming connections
+         //     a. On connection, spin up a connection thread. This is a conduit from the user to the server
+         //     b. This guy receives data from each individual user and incorporates the commands into the game ecosystem
+         
+         ITcpServer tcpServer = Dependency.Resolve<ITcpServer>();
 
          try
          {
-            tcpServer = Dependency.Resolve<ITcpServer>();
-
             tcpServer.Start( _port );
 
-            // Buffer for reading data
-            Byte[] bytes = new Byte[256];
-            String data = null;
+            byte[] bytes = new byte[256];
+            string data = null;
 
-            // Enter the listening loop. 
             while ( true )
             {
                Console.Write( "Waiting for a connection... " );
 
-               // Perform a blocking call to accept requests. 
-               // You could also user server.AcceptSocket() here.
                TcpClient client = tcpServer.Accept();
+
                Console.WriteLine( "Connected!" );
 
                data = null;
@@ -51,21 +51,17 @@ namespace NewEnvy.Engine
                {
                   while ( ( i = stream.Read( bytes, 0, bytes.Length ) ) != 0 )
                   {
-                     // Translate data bytes to a ASCII string.
                      data = System.Text.Encoding.ASCII.GetString( bytes, 0, i );
                      Console.WriteLine( "Received: {0}", data );
 
-                     // Process the data sent by the client.
                      data = data.ToUpper();
 
                      byte[] msg = System.Text.Encoding.ASCII.GetBytes( data );
 
-                     // Send back a response.
                      stream.Write( msg, 0, msg.Length );
                      Console.WriteLine( "Sent: {0}", data );
                   }
 
-                  // Shutdown and end connection
                   client.Close();
                }
                catch ( IOException )
