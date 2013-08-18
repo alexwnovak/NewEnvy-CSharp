@@ -7,6 +7,20 @@ namespace NewEnvy.Engine
 {
    public class ClientManager
    {
+      private static readonly ClientManager _clientManager = new ClientManager();
+
+      public static ClientManager Instance
+      {
+         get
+         {
+            return _clientManager;
+         }
+      }
+
+      private ClientManager()
+      {
+      }
+
       public void WatchForConnections()
       {
          GlobalConnectionTable.ClientConnected += OnClientConnected;

@@ -18,8 +18,7 @@ namespace NewEnvy.Engine
          var connectionListener = Dependency.Resolve<IConnectionListener>();
          connectionListener.StartAsync();
 
-         var clientManager = new ClientManager();
-         clientManager.WatchForConnections();
+         ClientManager.Instance.WatchForConnections();
 
          while ( IsRunning )
          {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using NewEnvy.Engine.CommandModel;
 
 namespace NewEnvy.Engine
 {
@@ -13,12 +14,13 @@ namespace NewEnvy.Engine
 
       public static void ProcessCommands()
       {
-         string command;
-         _commandQueue.TryDequeue( out command );
+         string commandString;
+         _commandQueue.TryDequeue( out commandString );
 
-         if ( command == "/shutdown" )
+         if ( commandString == "/gct" )
          {
-            
+            var command = new GctCommand();
+            command.Execute();
          }
       }
    }
