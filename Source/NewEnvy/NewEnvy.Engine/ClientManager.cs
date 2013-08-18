@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace NewEnvy.Engine
 {
-   public class ClientManager
+   public class ClientManager : IClientManager
    {
-      private static readonly ClientManager _clientManager = new ClientManager();
+      private static readonly IClientManager _clientManager = new ClientManager();
 
-      public static ClientManager Instance
+      public static IClientManager Instance
       {
          get
          {
@@ -21,12 +21,7 @@ namespace NewEnvy.Engine
       {
       }
 
-      public void WatchForConnections()
-      {
-         GlobalConnectionTable.ClientConnected += OnClientConnected;
-      }
-
-      private void OnClientConnected( object sender, ClientConnectedEventArgs clientConnectedEventArgs )
+      public void OnClientConnected( ClientConnectedEventArgs clientConnectedEventArgs )
       {
          Task.Factory.StartNew( () => SendReceiveProc( clientConnectedEventArgs.ClientConnection ) );
       }

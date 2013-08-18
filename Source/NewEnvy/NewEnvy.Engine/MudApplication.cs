@@ -9,6 +9,7 @@ namespace NewEnvy.Engine
          Dependency.CreateUnityContainer();
 
          Dependency.RegisterType<IConnectionListener, ConnectionListener>();
+         Dependency.RegisterInstance( ClientManager.Instance );
          Dependency.RegisterType<IServerClock, ServerClock>();
       }
 
