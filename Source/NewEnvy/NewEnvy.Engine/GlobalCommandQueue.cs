@@ -3,16 +3,30 @@ using NewEnvy.Engine.CommandModel;
 
 namespace NewEnvy.Engine
 {
-   public static class GlobalCommandQueue
+   public class GlobalCommandQueue : IGlobalCommandQueue
    {
+      private static readonly GlobalCommandQueue _globalCommandQueue = new GlobalCommandQueue();
+
+      public static GlobalCommandQueue Instance
+      {
+         get
+         {
+            return _globalCommandQueue;
+         }
+      }
+      
       private static readonly ConcurrentQueue<string> _commandQueue = new ConcurrentQueue<string>();
 
-      public static void AddCommand( string command )
+      private GlobalCommandQueue()
+      {
+      }
+
+      public void AddCommand( string command )
       {
          _commandQueue.Enqueue( command );
       }
 
-      public static void ProcessCommands()
+      public void ProcessCommands()
       {
          string commandString;
          _commandQueue.TryDequeue( out commandString );

@@ -53,6 +53,7 @@
     <Compile Include="GlobalCommandQueue.cs" />
     <Compile Include="GlobalConnectionTable.cs" />
     <Compile Include="IClientManager.cs" />
+    <Compile Include="IGlobalCommandQueue.cs" />
     <Compile Include="IServerClock.cs" />
     <Compile Include="IConnectionListener.cs" />
     <Compile Include="MudApplication.cs" />

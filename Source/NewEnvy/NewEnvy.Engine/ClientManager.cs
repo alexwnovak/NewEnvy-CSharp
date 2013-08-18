@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Concurrent;
+using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace NewEnvy.Engine
          {
             return _clientManager;
          }
-      }
+      } 
 
       private ClientManager()
       {
@@ -45,7 +46,7 @@ namespace NewEnvy.Engine
 
                   command = command.Replace( "\r", string.Empty ).Replace( "\n", string.Empty );
 
-                  GlobalCommandQueue.AddCommand( command );
+                  GlobalCommandQueue.Instance.AddCommand( command );
                }
 
                tcpClient.Close();

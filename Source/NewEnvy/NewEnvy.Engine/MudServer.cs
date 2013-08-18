@@ -22,7 +22,7 @@ namespace NewEnvy.Engine
             var serverClock = Dependency.Resolve<IServerClock>();
             serverClock.StartClock();
 
-            GlobalCommandQueue.ProcessCommands();
+            GlobalCommandQueue.Instance.ProcessCommands();
 
             serverClock.EndClockAndWait();
          }
