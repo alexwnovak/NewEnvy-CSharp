@@ -35,7 +35,7 @@ namespace NewEnvy.Engine
 
                Console.WriteLine( "Connected!" );
 
-               GlobalConnectionTable.AddConnection( client );
+               GlobalConnectionTable.Instance.AddConnection( client );
             }
          }
          catch ( SocketException e )

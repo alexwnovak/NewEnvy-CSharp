@@ -15,26 +15,34 @@ namespace NewEnvy.Engine
          }
       }
       
-      private static readonly ConcurrentQueue<string> _commandQueue = new ConcurrentQueue<string>();
+      private static readonly ConcurrentQueue<IssuedCommand> _commandQueue = new ConcurrentQueue<IssuedCommand>();
 
       private GlobalCommandQueue()
       {
       }
 
-      public void AddCommand( string command )
+      public void AddCommand( ClientConnection sender, string command )
       {
-         _commandQueue.Enqueue( command );
+         var issuedCommand = new IssuedCommand( sender, command );
+
+         _commandQueue.Enqueue( issuedCommand );
       }
 
       public void ProcessCommands()
       {
-         string commandString;
-         _commandQueue.TryDequeue( out commandString );
+         IssuedCommand issuedCommand;
 
-         if ( commandString == "/gct" )
+         if ( _commandQueue.TryDequeue( out issuedCommand ) )
          {
-            var command = new GctCommand();
-            command.Execute();
+            if ( issuedCommand.Command == "/gct" )
+            {
+               System.Diagnostics.Debug.WriteLine( "Received /gct" );
+               var command = new GctCommand();
+               
+               string output = command.Execute();
+
+               issuedCommand.Sender.Send( output );
+            }
          }
       }
    }

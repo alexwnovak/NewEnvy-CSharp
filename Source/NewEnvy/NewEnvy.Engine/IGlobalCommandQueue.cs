@@ -2,7 +2,7 @@
 {
    public interface IGlobalCommandQueue
    {
-      void AddCommand( string command );
+      void AddCommand( ClientConnection clientConnection, string command );
 
       void ProcessCommands();
    }

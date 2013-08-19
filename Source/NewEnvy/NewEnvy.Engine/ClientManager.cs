@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.IO;
+﻿using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,32 +28,11 @@ namespace NewEnvy.Engine
 
       private void SendReceiveProc( ClientConnection clientConnection )
       {
-         var tcpClient = clientConnection.TcpClient;
-         var bytes = new byte[256];
-
          while ( true )
          {
-            NetworkStream stream = clientConnection.TcpClient.GetStream();
+            string command = clientConnection.Receive();
 
-            try
-            {
-               int bytesRead;
-
-               while ( ( bytesRead = stream.Read( bytes, 0, bytes.Length ) ) != 0 )
-               {
-                  string command = Encoding.ASCII.GetString( bytes, 0, bytesRead );
-
-                  command = command.Replace( "\r", string.Empty ).Replace( "\n", string.Empty );
-
-                  GlobalCommandQueue.Instance.AddCommand( command );
-               }
-
-               tcpClient.Close();
-            }
-            catch ( IOException )
-            {
-               tcpClient.Close();
-            }
+            GlobalCommandQueue.Instance.AddCommand( clientConnection, command );
          }
       }
    }

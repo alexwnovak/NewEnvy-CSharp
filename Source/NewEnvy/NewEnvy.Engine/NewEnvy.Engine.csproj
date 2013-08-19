@@ -56,6 +56,7 @@
     <Compile Include="IGlobalCommandQueue.cs" />
     <Compile Include="IServerClock.cs" />
     <Compile Include="IConnectionListener.cs" />
+    <Compile Include="IssuedCommand.cs" />
     <Compile Include="MudApplication.cs" />
     <Compile Include="MudServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
