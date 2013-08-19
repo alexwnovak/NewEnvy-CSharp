@@ -20,7 +20,7 @@ namespace NewEnvy.Engine.CommandModel
 
             if ( clientConnections.TryGetValue( key, out clientConnection ) )
             {
-               stringBuilder.AppendFormat( "  {0} {1}", clientConnection.ConnectionId, Environment.NewLine );
+               stringBuilder.AppendFormat( "  {0} {1} {2}", clientConnection.ConnectionId, clientConnection.IPAddress, Environment.NewLine );
             }
          }
 

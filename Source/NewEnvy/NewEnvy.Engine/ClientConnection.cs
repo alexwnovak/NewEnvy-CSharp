@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
@@ -16,6 +17,14 @@ namespace NewEnvy.Engine
       {
          get;
          private set;
+      }
+
+      public string IPAddress
+      {
+         get
+         {
+            return TcpClient.Client.RemoteEndPoint.ToString();
+         }
       }
 
       private readonly NetworkStream _networkStream;
