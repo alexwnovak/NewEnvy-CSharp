@@ -1,20 +1,21 @@
 ﻿using System.Collections.Concurrent;
+using NewEnvy.Core;
 using NewEnvy.Engine.CommandModel;
 
 namespace NewEnvy.Engine
 {
    public class GlobalCommandQueue : IGlobalCommandQueue
    {
-      private static readonly GlobalCommandQueue _globalCommandQueue = new GlobalCommandQueue();
+      private static readonly IGlobalCommandQueue _globalCommandQueue = Dependency.Resolve<IGlobalCommandQueue>();
 
-      public static GlobalCommandQueue Instance
+      public static IGlobalCommandQueue Instance
       {
          get
          {
             return _globalCommandQueue;
          }
       }
-      
+
       private static readonly ConcurrentQueue<IssuedCommand> _commandQueue = new ConcurrentQueue<IssuedCommand>();
 
       private GlobalCommandQueue()
@@ -38,8 +39,16 @@ namespace NewEnvy.Engine
             {
                System.Diagnostics.Debug.WriteLine( "Received /gct" );
                var command = new GctCommand();
-               
+
                string output = command.Execute();
+
+               issuedCommand.Sender.Send( output );
+            }
+            else if ( issuedCommand.Command == "quit" )
+            {
+               var command = new QuitCommand();
+
+               string output = command.Execute( issuedCommand.Sender );
 
                issuedCommand.Sender.Send( output );
             }

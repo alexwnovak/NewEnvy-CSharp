@@ -2,9 +2,9 @@
 {
    public class QuitCommand
    {
-      public string Execute()
+      public string Execute( ClientConnection sender )
       {
-         return "Foo";
+         return "See ya.";
       }
    }
 }

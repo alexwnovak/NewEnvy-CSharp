@@ -14,7 +14,7 @@ namespace NewEnvy.Engine.Test
       }
 
       [TestMethod]
-      public void Run_HappyPath_StartsServerAndRunsMainLoop()
+      public void Run_HappyPath_StartsServerAndMainLoopExecutesMajorComponents()
       {
          var mudServer = new MudServer();
          
@@ -23,9 +23,12 @@ namespace NewEnvy.Engine.Test
          var connectionListenerMock = new Mock<IConnectionListener>();
          Dependency.RegisterInstance( connectionListenerMock.Object );
 
-         //var serverClockMock = new Mock<IServerClock>();
-         //serverClockMock.Setup( scm => scm.Wait() ).Callback( () => mudServer.Stop() );
-         //Dependency.RegisterInstance( serverClockMock.Object );
+         var globalCommandQueueMock = new Mock<IGlobalCommandQueue>();
+         Dependency.RegisterInstance( globalCommandQueueMock.Object );
+
+         var serverClockMock = new Mock<IServerClock>();
+         serverClockMock.Setup( scm => scm.EndClockAndWait() ).Callback( () => mudServer.Stop() );
+         Dependency.RegisterInstance( serverClockMock.Object );
 
          // Test
 
@@ -34,7 +37,9 @@ namespace NewEnvy.Engine.Test
          // Assert
 
          connectionListenerMock.Verify( clm => clm.StartAsync(), Times.Once() );
-         //serverClockMock.Verify( scm => scm.Wait(), Times.Once() );
+         serverClockMock.Verify( scm => scm.StartClock(), Times.Once() );
+         globalCommandQueueMock.Verify( gcqm => gcqm.ProcessCommands(), Times.Once() );
+         serverClockMock.Verify( scm => scm.EndClockAndWait(), Times.Once() );
       }
    }
 }
