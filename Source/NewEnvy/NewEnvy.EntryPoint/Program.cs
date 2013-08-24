@@ -1,4 +1,5 @@
 ﻿using NewEnvy.Engine;
+using NewEnvy.Engine.Net;
 
 namespace NewEnvy.EntryPoint
 {
@@ -6,7 +7,13 @@ namespace NewEnvy.EntryPoint
    {
       public static void Main()
       {
-         new MudApplication().Main();
+         var asyncTcpServer = new AsyncTcpServer();
+
+         asyncTcpServer.Listen().Wait();
+
+
+
+         //new MudApplication().Main();
       }
    }
 }

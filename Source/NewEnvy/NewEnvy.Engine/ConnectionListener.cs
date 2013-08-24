@@ -17,7 +17,7 @@ namespace NewEnvy.Engine
       {
       }
 
-      private void ThreadProc()
+      internal void ThreadProc()
       {
          TcpListener tcpListener = null;
 
