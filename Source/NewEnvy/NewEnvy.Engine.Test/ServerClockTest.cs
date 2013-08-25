@@ -19,11 +19,11 @@ namespace NewEnvy.Engine.Test
       }
 
       [TestMethod]
-      public void ElapsedTime_InitialState_ElapsedTimeIsMinValue()
+      public void ElapsedTime_InitialState_ElapsedTimeIsZero()
       {
          var serverClock = new ServerClock();
 
-         Assert.AreEqual( TimeSpan.MinValue, serverClock.ElapsedTime );
+         Assert.AreEqual( TimeSpan.FromMilliseconds( 0 ), serverClock.ElapsedTime );
       }
 
       [TestMethod]
@@ -77,6 +77,37 @@ namespace NewEnvy.Engine.Test
          // Assert
 
          Assert.AreEqual( TimeSpan.FromSeconds( 5 ), serverClock.ElapsedTime );
+      }
+
+      [TestMethod]
+      public void Pulse_ElapsedTimeSurpassesHeartbeatThreshold_RaisesHeartbeatEvent()
+      {
+         var noon = new DateTime( 2013, 8, 25, 12, 0, 0 );
+         var fiveSecondsAfterNoon = new DateTime( 2013, 8, 25, 12, 0, 5 );
+         bool raisedEvent = false;
+
+         // Setup
+
+         var dateTimeMock = new Mock<IDateTime>();
+         dateTimeMock.Setup( dtm => dtm.UtcNow ).ReturnsInOrder( noon, fiveSecondsAfterNoon );
+         Dependency.RegisterInstance( dateTimeMock.Object );
+
+         // Test
+
+         var serverClock = new ServerClock();
+
+         serverClock.Heartbeat += ( sender, e ) =>
+         {
+            raisedEvent = true;
+         };
+
+         serverClock.Reset();
+
+         serverClock.Pulse();
+
+         // Assert
+
+         Assert.IsTrue( raisedEvent );
       }
    }
 }

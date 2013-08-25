@@ -15,9 +15,11 @@ namespace NewEnvy.Engine
          private set;
       }
 
+      public event EventHandler Heartbeat = null;
+
       public ServerClock()
       {
-         ElapsedTime = TimeSpan.MinValue;
+         ElapsedTime = TimeSpan.FromMilliseconds( 0 );
       }
 
       public void Reset()
@@ -25,6 +27,8 @@ namespace NewEnvy.Engine
          var dateTime = Dependency.Resolve<IDateTime>();
 
          _startTime = dateTime.UtcNow;
+
+         ElapsedTime = TimeSpan.FromMilliseconds( 0 );
 
          _hasReset = true;
       }
@@ -37,8 +41,24 @@ namespace NewEnvy.Engine
          }
 
          var dateTime = Dependency.Resolve<IDateTime>();
+         var utcNow = dateTime.UtcNow;
 
-         ElapsedTime += dateTime.UtcNow - _startTime;
+         ElapsedTime += ( utcNow - _startTime );
+
+         if ( ElapsedTime > TimeSpan.FromSeconds( 1 ) )
+         {
+            OnHeartbeat( EventArgs.Empty );
+         }
+      }
+
+      protected virtual void OnHeartbeat( EventArgs e )
+      {
+         var eventHandler = Heartbeat;
+
+         if ( eventHandler != null )
+         {
+            eventHandler( this, e );
+         }
       }
    }
 }
