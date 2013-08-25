@@ -15,6 +15,12 @@ namespace NewEnvy.Engine
          private set;
       }
 
+      public TimeSpan HeartbeatThreshold
+      {
+         get;
+         set;
+      }
+
       public event EventHandler Heartbeat = null;
 
       public ServerClock()
@@ -45,7 +51,7 @@ namespace NewEnvy.Engine
 
          ElapsedTime += ( utcNow - _startTime );
 
-         if ( ElapsedTime > TimeSpan.FromSeconds( 1 ) )
+         if ( ElapsedTime > HeartbeatThreshold )
          {
             OnHeartbeat( EventArgs.Empty );
          }

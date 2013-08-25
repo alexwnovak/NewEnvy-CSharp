@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NewEnvy.Core;
@@ -94,7 +90,10 @@ namespace NewEnvy.Engine.Test
 
          // Test
 
-         var serverClock = new ServerClock();
+         var serverClock = new ServerClock
+         {
+            HeartbeatThreshold = TimeSpan.FromSeconds( 1 )
+         };
 
          serverClock.Heartbeat += ( sender, e ) =>
          {
@@ -108,6 +107,40 @@ namespace NewEnvy.Engine.Test
          // Assert
 
          Assert.IsTrue( raisedEvent );
+      }
+
+      [TestMethod]
+      public void Pulse_ElapsedTimeDoesNotSurpassHeartbeatThreshold_DoesNotRaiseHeartbeatEvent()
+      {
+         var noon = new DateTime( 2013, 8, 25, 12, 0, 0 );
+         var fiveSecondsAfterNoon = new DateTime( 2013, 8, 25, 12, 0, 5 );
+         bool raisedEvent = false;
+
+         // Setup
+
+         var dateTimeMock = new Mock<IDateTime>();
+         dateTimeMock.Setup( dtm => dtm.UtcNow ).ReturnsInOrder( noon, fiveSecondsAfterNoon );
+         Dependency.RegisterInstance( dateTimeMock.Object );
+
+         // Test
+
+         var serverClock = new ServerClock
+         {
+            HeartbeatThreshold = TimeSpan.FromSeconds( 10 )
+         };
+
+         serverClock.Heartbeat += ( sender, e ) =>
+         {
+            raisedEvent = true;
+         };
+
+         serverClock.Reset();
+
+         serverClock.Pulse();
+
+         // Assert
+
+         Assert.IsFalse( raisedEvent );
       }
    }
 }
