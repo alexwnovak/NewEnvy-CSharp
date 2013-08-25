@@ -27,7 +27,7 @@ namespace NewEnvy.Engine.Test
          Dependency.RegisterInstance( globalCommandQueueMock.Object );
 
          var serverClockMock = new Mock<IServerClock>();
-         serverClockMock.Setup( scm => scm.EndClockAndWait() ).Callback( () => mudServer.Stop() );
+         serverClockMock.Setup( scm => scm.EndClockAndWait() ).Callback( mudServer.Stop );
          Dependency.RegisterInstance( serverClockMock.Object );
 
          // Test
