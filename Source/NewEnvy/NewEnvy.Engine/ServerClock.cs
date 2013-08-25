@@ -1,26 +1,20 @@
 ﻿using System;
 using System.Threading;
+using NewEnvy.Core;
 
 namespace NewEnvy.Engine
 {
-   public class ServerClock : IServerClock
+   public class ServerClock
    {
-      private DateTime _startTime;
-
-      public void StartClock()
+      public TimeSpan ElapsedTime
       {
-         _startTime = DateTime.UtcNow;
+         get;
+         private set;
       }
 
-      public void EndClockAndWait()
+      public void Reset()
       {
-         TimeSpan elapsedTime = DateTime.UtcNow - _startTime;
-
-         const double waitTime = 100;
-
-         Thread.Sleep( TimeSpan.FromMilliseconds( waitTime ) );
-
-         //Console.WriteLine( "Waiting for " + waitTime + " msec" );
+         ElapsedTime = TimeSpan.MinValue;
       }
    }
 }
