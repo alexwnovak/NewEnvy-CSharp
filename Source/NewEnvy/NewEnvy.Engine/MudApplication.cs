@@ -10,7 +10,7 @@ namespace NewEnvy.Engine
 
          Dependency.RegisterType<IConnectionListener, ConnectionListener>();
          Dependency.RegisterInstance( ClientManager.Instance );
-         Dependency.RegisterInstance( GlobalCommandQueue.Instance );
+         //Dependency.RegisterInstance( GlobalCommandQueue.Instance );
          Dependency.RegisterType<IServerClock, ServerClock>();
       }
 

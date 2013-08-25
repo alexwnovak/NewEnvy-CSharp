@@ -7,6 +7,8 @@ namespace NewEnvy.Engine
 {
    public class ConnectionListener : IConnectionListener
    {
+      public event EventHandler ClientConnected = null;
+
       public void StartAsync()
       {
          Console.WriteLine( "Starting connection listener" );
@@ -33,9 +35,11 @@ namespace NewEnvy.Engine
 
                TcpClient client = tcpListener.AcceptTcpClient();
 
+               OnClientConnected( EventArgs.Empty );
+
                Console.WriteLine( "Connected!" );
 
-               GlobalConnectionTable.Instance.AddConnection( client );
+               //GlobalConnectionTable.Instance.AddConnection( client );
             }
          }
          catch ( SocketException e )
@@ -48,6 +52,16 @@ namespace NewEnvy.Engine
             {
                tcpListener.Stop();
             }
+         }
+      }
+
+      protected virtual void OnClientConnected( EventArgs e )
+      {
+         var ev = ClientConnected;
+
+         if ( ev != null )
+         {
+            ev( this, e );
          }
       }
    }

@@ -18,7 +18,7 @@ namespace NewEnvy.Engine
 
       private static readonly ConcurrentQueue<IssuedCommand> _commandQueue = new ConcurrentQueue<IssuedCommand>();
 
-      private GlobalCommandQueue()
+      public GlobalCommandQueue()
       {
       }
 
