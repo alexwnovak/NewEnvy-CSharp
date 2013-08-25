@@ -15,6 +15,11 @@ namespace NewEnvy.Engine
          private set;
       }
 
+      public ServerClock()
+      {
+         ElapsedTime = TimeSpan.MinValue;
+      }
+
       public void Reset()
       {
          var dateTime = Dependency.Resolve<IDateTime>();

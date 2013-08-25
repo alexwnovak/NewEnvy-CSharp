@@ -19,6 +19,14 @@ namespace NewEnvy.Engine.Test
       }
 
       [TestMethod]
+      public void ElapsedTime_InitialState_ElapsedTimeIsMinValue()
+      {
+         var serverClock = new ServerClock();
+
+         Assert.AreEqual( TimeSpan.MinValue, serverClock.ElapsedTime );
+      }
+
+      [TestMethod]
       public void Reset_ResetStartTime_GetsUtcNow()
       {
          // Setup
