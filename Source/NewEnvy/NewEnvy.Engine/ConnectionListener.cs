@@ -7,7 +7,7 @@ namespace NewEnvy.Engine
 {
    public class ConnectionListener : IConnectionListener
    {
-      public event EventHandler<ClientConnectedEventArgs> ClientConnected = null;
+      public event EventHandler<ClientConnectionEventArgs> ClientConnected = null;
 
       public void StartAsync()
       {
@@ -35,7 +35,7 @@ namespace NewEnvy.Engine
                TcpClient client = tcpListener.AcceptTcpClient();
 
                var clientConnection = new ClientConnection( client );
-               OnClientConnected( new ClientConnectedEventArgs( clientConnection ) );
+               OnClientConnected( new ClientConnectionEventArgs( clientConnection ) );
 
                Console.WriteLine( "Connected!" );
             }
@@ -53,7 +53,7 @@ namespace NewEnvy.Engine
          }
       }
 
-      protected virtual void OnClientConnected( ClientConnectedEventArgs e )
+      protected virtual void OnClientConnected( ClientConnectionEventArgs e )
       {
          var ev = ClientConnected;
 

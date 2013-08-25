@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 
 namespace NewEnvy.Engine
 {
@@ -31,6 +29,7 @@ namespace NewEnvy.Engine
       private readonly NetworkStream _networkStream;
 
       public event EventHandler<CommandEventArgs> ReceivedCommand = null;
+      public event EventHandler<ClientConnectionEventArgs> Disconnected = null;
 
       public ClientConnection( TcpClient tcpClient )
       {
@@ -42,6 +41,7 @@ namespace NewEnvy.Engine
       public void Send( string data )
       {
          var bytes = Encoding.ASCII.GetBytes( data );
+
          _bytesWritten += bytes.Length;
 
          _memoryStream.Write( bytes, 0, bytes.Length );
@@ -64,8 +64,7 @@ namespace NewEnvy.Engine
          }
          catch ( IOException )
          {
-            //OnClientDisconnected();
-            Console.WriteLine( "Client disconnected" );
+            OnDisconnect( new ClientConnectionEventArgs( this ) );
             return;
          }
 
@@ -86,6 +85,16 @@ namespace NewEnvy.Engine
       protected virtual void OnReceivedCommand( CommandEventArgs e )
       {
          var ev = ReceivedCommand;
+
+         if ( ev != null )
+         {
+            ev( this, e );
+         }
+      }
+
+      protected virtual void OnDisconnect( ClientConnectionEventArgs e )
+      {
+         var ev = Disconnected;
 
          if ( ev != null )
          {
@@ -128,45 +137,12 @@ namespace NewEnvy.Engine
          }
          catch ( IOException )
          {
-            //OnClientDisconnected();
-            Console.WriteLine( "Client disconnected" );
+            OnDisconnect( new ClientConnectionEventArgs( this ) );
             return;
          }
 
          _bytesWritten = 0;
          _memoryStream = new MemoryStream();
       }
-
-      //public string Receive()
-      //{
-      //   string command = null;
-
-      //   var bytes = new byte[256];
-
-      //   try
-      //   {
-      //      int bytesRead = _networkStream.Read( bytes, 0, bytes.Length );
-
-      //      if ( bytesRead != 0 )
-      //      {
-      //         command = Encoding.ASCII.GetString( bytes, 0, bytesRead );
-
-      //         command = command.Replace( "\r", string.Empty ).Replace( "\n", string.Empty );
-      //      }
-      //   }
-      //   catch ( IOException )
-      //   {
-      //      _tcpClient.Close();
-      //   }
-
-      //   return command;
-      //}
-
-      //public void Send( string output )
-      //{
-      //   var bytes = Encoding.ASCII.GetBytes( output );
-
-      //   _networkStream.Write( bytes, 0, bytes.Length );
-      //}
    }
 }

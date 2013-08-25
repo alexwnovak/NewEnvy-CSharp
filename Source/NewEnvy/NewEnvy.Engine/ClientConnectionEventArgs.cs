@@ -2,7 +2,7 @@
 
 namespace NewEnvy.Engine
 {
-   public class ClientConnectedEventArgs : EventArgs
+   public class ClientConnectionEventArgs : EventArgs
    {
       private readonly ClientConnection _clientConnection;
 
@@ -14,7 +14,7 @@ namespace NewEnvy.Engine
          }
       }
 
-      public ClientConnectedEventArgs( ClientConnection clientConnection )
+      public ClientConnectionEventArgs( ClientConnection clientConnection )
       {
          _clientConnection = clientConnection;
       }

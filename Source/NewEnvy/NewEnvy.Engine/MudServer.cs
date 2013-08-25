@@ -37,7 +37,7 @@ namespace NewEnvy.Engine
          }
       }
 
-      private void OnClientConnected( object sender, ClientConnectedEventArgs e )
+      private void OnClientConnected( object sender, ClientConnectionEventArgs e )
       {
          _globalConnectionTable.RegisterConnection( e.ClientConnection );
          //Console.WriteLine( "Client connected: " + e.ClientConnection.IPAddress );

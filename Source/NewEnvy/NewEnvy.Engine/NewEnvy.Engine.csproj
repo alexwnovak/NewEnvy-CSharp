@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientConnectedEventArgs.cs" />
+    <Compile Include="ClientConnectionEventArgs.cs" />
     <Compile Include="ClientConnection.cs" />
     <Compile Include="ClientManager.cs" />
     <Compile Include="CommandEventArgs.cs" />

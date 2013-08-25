@@ -32,6 +32,7 @@ namespace NewEnvy.Engine
          AddConnection( clientConnection );
 
          clientConnection.ReceivedCommand += OnReceivedCommand;
+         clientConnection.Disconnected += OnClientDisconnect;
          clientConnection.BeginReceiving();
 
          //var clientManager = Dependency.Resolve<IClientManager>();
@@ -41,6 +42,11 @@ namespace NewEnvy.Engine
       private void OnReceivedCommand( object sender, CommandEventArgs e )
       {
          e.ClientConnection.Send( "Your command: " + e.Command );
+      }
+
+      private void OnClientDisconnect( object sender, ClientConnectionEventArgs e )
+      {
+         
       }
 
       private void AddConnection( ClientConnection clientConnection )

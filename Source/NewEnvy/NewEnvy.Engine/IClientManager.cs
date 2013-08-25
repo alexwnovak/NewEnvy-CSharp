@@ -2,6 +2,6 @@
 {
    public interface IClientManager
    {
-      void OnClientConnected( ClientConnectedEventArgs clientConnectedEventArgs );
+      void OnClientConnected( ClientConnectionEventArgs clientConnectedEventArgs );
    }
 }
