@@ -13,33 +13,33 @@ namespace NewEnvy.Engine.Test
          Dependency.CreateUnityContainer();
       }
 
-      [TestMethod]
-      public void Run_HappyPath_StartsServerAndMainLoopExecutesMajorComponents()
-      {
-         var mudServer = new MudServer();
+      //[TestMethod]
+      //public void Run_HappyPath_StartsServerAndMainLoopExecutesMajorComponents()
+      //{
+      //   var mudServer = new MudServer();
          
-         // Setup
+      //   // Setup
 
-         var connectionListenerMock = new Mock<IConnectionListener>();
-         Dependency.RegisterInstance( connectionListenerMock.Object );
+      //   var connectionListenerMock = new Mock<IConnectionListener>();
+      //   Dependency.RegisterInstance( connectionListenerMock.Object );
 
-         var globalCommandQueueMock = new Mock<IGlobalCommandQueue>();
-         Dependency.RegisterInstance( globalCommandQueueMock.Object );
+      //   var globalCommandQueueMock = new Mock<IGlobalCommandQueue>();
+      //   Dependency.RegisterInstance( globalCommandQueueMock.Object );
 
-         var serverClockMock = new Mock<IServerClock>();
-         serverClockMock.Setup( scm => scm.EndClockAndWait() ).Callback( mudServer.Stop );
-         Dependency.RegisterInstance( serverClockMock.Object );
+      //   var serverClockMock = new Mock<IServerClock>();
+      //   serverClockMock.Setup( scm => scm.EndClockAndWait() ).Callback( mudServer.Stop );
+      //   Dependency.RegisterInstance( serverClockMock.Object );
 
-         // Test
+      //   // Test
 
-         mudServer.Run();
+      //   mudServer.Run();
 
-         // Assert
+      //   // Assert
 
-         connectionListenerMock.Verify( clm => clm.StartAsync(), Times.Once() );
-         serverClockMock.Verify( scm => scm.StartClock(), Times.Once() );
-         globalCommandQueueMock.Verify( gcqm => gcqm.ProcessCommands(), Times.Once() );
-         serverClockMock.Verify( scm => scm.EndClockAndWait(), Times.Once() );
-      }
+      //   connectionListenerMock.Verify( clm => clm.StartAsync(), Times.Once() );
+      //   serverClockMock.Verify( scm => scm.StartClock(), Times.Once() );
+      //   globalCommandQueueMock.Verify( gcqm => gcqm.ProcessCommands(), Times.Once() );
+      //   serverClockMock.Verify( scm => scm.EndClockAndWait(), Times.Once() );
+      //}
    }
 }

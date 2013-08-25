@@ -37,22 +37,38 @@ namespace NewEnvy.Engine.Test
          dateTimeMock.Verify( dtm => dtm.UtcNow, Times.Once() );
       }
 
-      //[TestMethod]
-      //public void Pulse_()
-      //{
-      //   var utcNow = DateTime.UtcNow;
+      [TestMethod]
+      [ExpectedException( typeof( InvalidOperationException ) )]
+      public void Pulse_HasNotCalledReset_ThrowsInvalidOperationException()
+      {
+         var serverClock = new ServerClock();
 
-      //   // Setup
+         serverClock.Pulse();
+      }
 
-      //   var dateTimeMock = new Mock<IDateTime>();
-      //   dateTimeMock.Setup( dtm => dtm.UtcNow ).Returns( utcNow );
-      //   Dependency.RegisterInstance( dateTimeMock.Object );
+      [TestMethod]
+      public void Pulse_HappyPath_AddsToElapsedTime()
+      {
+         var noon = new DateTime( 2013, 8, 25, 12, 0, 0 );
+         var fiveSecondsAfterNoon = new DateTime( 2013, 8, 25, 12, 0, 5 );
 
-      //   // Test
+         // Setup
 
-      //   var serverClock = new ServerClock();
+         var dateTimeMock = new Mock<IDateTime>();
+         dateTimeMock.Setup( dtm => dtm.UtcNow ).ReturnsInOrder( noon, fiveSecondsAfterNoon );
+         Dependency.RegisterInstance( dateTimeMock.Object );
 
-      //   serverClock.Pulse();
-      //}
+         // Test
+
+         var serverClock = new ServerClock();
+
+         serverClock.Reset();
+
+         serverClock.Pulse();
+
+         // Assert
+
+         Assert.AreEqual( TimeSpan.FromSeconds( 5 ), serverClock.ElapsedTime );
+      }
    }
 }
