@@ -4,7 +4,7 @@ namespace NewEnvy.Engine
 {
    public interface IConnectionListener
    {
-      event EventHandler ClientConnected;
+      event EventHandler<ClientConnectedEventArgs> ClientConnected;
 
       void StartAsync();
 

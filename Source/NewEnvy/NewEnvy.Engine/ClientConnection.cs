@@ -29,10 +29,8 @@ namespace NewEnvy.Engine
 
       private readonly NetworkStream _networkStream;
 
-      public ClientConnection( int connectionId, TcpClient tcpClient )
+      public ClientConnection( TcpClient tcpClient )
       {
-         ConnectionId = connectionId;
-
          TcpClient = tcpClient;
 
          _networkStream = tcpClient.GetStream();

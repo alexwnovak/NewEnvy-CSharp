@@ -30,15 +30,15 @@ namespace NewEnvy.Engine
       {
       }
 
-      public void AddConnection( TcpClient tcpClient )
-      {
-         int connectionId = _clientConnections.Keys.Count + 1;
-         var clientConnection = new ClientConnection( connectionId, tcpClient );
+      //public void AddConnection( TcpClient tcpClient )
+      //{
+      //   int connectionId = _clientConnections.Keys.Count + 1;
+      //   var clientConnection = new ClientConnection( connectionId, tcpClient );
 
-         _clientConnections.TryAdd( connectionId, clientConnection );
+      //   _clientConnections.TryAdd( connectionId, clientConnection );
 
-         var clientManager = Dependency.Resolve<IClientManager>();
-         clientManager.OnClientConnected( new ClientConnectedEventArgs( clientConnection ) );
-      }
+      //   var clientManager = Dependency.Resolve<IClientManager>();
+      //   clientManager.OnClientConnected( new ClientConnectedEventArgs( clientConnection ) );
+      //}
    }
 }

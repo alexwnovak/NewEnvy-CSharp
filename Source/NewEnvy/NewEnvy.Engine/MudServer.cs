@@ -33,9 +33,9 @@ namespace NewEnvy.Engine
          }
       }
 
-      private void OnClientConnected( object sender, EventArgs eventArgs )
+      private void OnClientConnected( object sender, ClientConnectedEventArgs e )
       {
-         throw new NotImplementedException();
+         Console.WriteLine( "Client connected: " + e.ClientConnection.IPAddress );
       }
 
       public void Stop()
