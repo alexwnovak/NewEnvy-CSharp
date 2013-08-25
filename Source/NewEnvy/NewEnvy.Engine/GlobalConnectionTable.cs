@@ -46,14 +46,18 @@ namespace NewEnvy.Engine
 
       private void OnClientDisconnect( object sender, ClientConnectionEventArgs e )
       {
-         
+         var clientConnection = e.ClientConnection;
+
+         _clientConnections.TryRemove( clientConnection.ConnectionId, out clientConnection );
+
+         Console.WriteLine( "Client disconnected" );
       }
 
       private void AddConnection( ClientConnection clientConnection )
       {
-         int connectionId = GenerateConnectionId();
+         clientConnection.ConnectionId = GenerateConnectionId();
 
-         _clientConnections.TryAdd( connectionId, clientConnection );
+         _clientConnections.TryAdd( clientConnection.ConnectionId, clientConnection );
       }
 
       private int GenerateConnectionId()

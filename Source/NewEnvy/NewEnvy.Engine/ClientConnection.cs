@@ -10,7 +10,7 @@ namespace NewEnvy.Engine
       public int ConnectionId
       {
          get;
-         private set;
+         set;
       }
 
       private readonly TcpClient _tcpClient;
