@@ -1,21 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Net.Sockets;
-using NewEnvy.Core;
 
 namespace NewEnvy.Engine
 {
    public class GlobalConnectionTable
    {
       private readonly ConcurrentDictionary<int, ClientConnection> _clientConnections = new ConcurrentDictionary<int, ClientConnection>();
-
-      //public ConcurrentDictionary<int, ClientConnection> ClientConnections
-      //{
-      //   get
-      //   {
-      //      return _clientConnections;
-      //   }
-      //}
 
       public void SendAll()
       {
@@ -34,9 +24,6 @@ namespace NewEnvy.Engine
          clientConnection.ReceivedCommand += OnReceivedCommand;
          clientConnection.Disconnected += OnClientDisconnect;
          clientConnection.BeginReceiving();
-
-         //var clientManager = Dependency.Resolve<IClientManager>();
-         //clientManager.OnClientConnected( new ClientConnectedEventArgs( clientConnection ) );
       }
 
       private void OnReceivedCommand( object sender, CommandEventArgs e )
