@@ -35,7 +35,6 @@ namespace NewEnvy.Engine
                TcpClient client = tcpListener.AcceptTcpClient();
 
                var clientConnection = new ClientConnection( client );
-
                OnClientConnected( new ClientConnectedEventArgs( clientConnection ) );
 
                Console.WriteLine( "Connected!" );

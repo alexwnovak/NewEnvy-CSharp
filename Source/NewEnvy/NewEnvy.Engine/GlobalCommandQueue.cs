@@ -1,58 +1,58 @@
-﻿using System.Collections.Concurrent;
-using NewEnvy.Core;
-using NewEnvy.Engine.CommandModel;
+﻿//using System.Collections.Concurrent;
+//using NewEnvy.Core;
+//using NewEnvy.Engine.CommandModel;
 
-namespace NewEnvy.Engine
-{
-   public class GlobalCommandQueue : IGlobalCommandQueue
-   {
-      private static readonly IGlobalCommandQueue _globalCommandQueue = Dependency.Resolve<IGlobalCommandQueue>();
+//namespace NewEnvy.Engine
+//{
+//   public class GlobalCommandQueue : IGlobalCommandQueue
+//   {
+//      private static readonly IGlobalCommandQueue _globalCommandQueue = Dependency.Resolve<IGlobalCommandQueue>();
 
-      public static IGlobalCommandQueue Instance
-      {
-         get
-         {
-            return _globalCommandQueue;
-         }
-      }
+//      public static IGlobalCommandQueue Instance
+//      {
+//         get
+//         {
+//            return _globalCommandQueue;
+//         }
+//      }
 
-      private static readonly ConcurrentQueue<IssuedCommand> _commandQueue = new ConcurrentQueue<IssuedCommand>();
+//      private static readonly ConcurrentQueue<IssuedCommand> _commandQueue = new ConcurrentQueue<IssuedCommand>();
 
-      public GlobalCommandQueue()
-      {
-      }
+//      public GlobalCommandQueue()
+//      {
+//      }
 
-      public void AddCommand( ClientConnection sender, string command )
-      {
-         var issuedCommand = new IssuedCommand( sender, command );
+//      public void AddCommand( ClientConnection sender, string command )
+//      {
+//         var issuedCommand = new IssuedCommand( sender, command );
 
-         _commandQueue.Enqueue( issuedCommand );
-      }
+//         _commandQueue.Enqueue( issuedCommand );
+//      }
 
-      public void ProcessCommands()
-      {
-         IssuedCommand issuedCommand;
+//      public void ProcessCommands()
+//      {
+//         IssuedCommand issuedCommand;
 
-         if ( _commandQueue.TryDequeue( out issuedCommand ) )
-         {
-            if ( issuedCommand.Command == "/gct" )
-            {
-               System.Diagnostics.Debug.WriteLine( "Received /gct" );
-               var command = new GctCommand();
+//         if ( _commandQueue.TryDequeue( out issuedCommand ) )
+//         {
+//            if ( issuedCommand.Command == "/gct" )
+//            {
+//               System.Diagnostics.Debug.WriteLine( "Received /gct" );
+//               var command = new GctCommand();
 
-               string output = command.Execute();
+//               string output = command.Execute();
 
-               issuedCommand.Sender.Send( output );
-            }
-            else if ( issuedCommand.Command == "quit" )
-            {
-               var command = new QuitCommand();
+//               issuedCommand.Sender.Send( output );
+//            }
+//            else if ( issuedCommand.Command == "quit" )
+//            {
+//               var command = new QuitCommand();
 
-               string output = command.Execute( issuedCommand.Sender );
+//               string output = command.Execute( issuedCommand.Sender );
 
-               issuedCommand.Sender.Send( output );
-            }
-         }
-      }
-   }
-}
+//               issuedCommand.Sender.Send( output );
+//            }
+//         }
+//      }
+//   }
+//}

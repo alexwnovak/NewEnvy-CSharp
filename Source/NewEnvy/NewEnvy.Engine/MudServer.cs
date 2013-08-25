@@ -12,6 +12,8 @@ namespace NewEnvy.Engine
          private set;
       }
 
+      private GlobalConnectionTable _globalConnectionTable = new GlobalConnectionTable();
+
       public void Run()
       {
          IsRunning = true;
@@ -22,20 +24,23 @@ namespace NewEnvy.Engine
 
          while ( IsRunning )
          {
+            _globalConnectionTable.SendAll();
+
+            Thread.Sleep( 5000 );
+
             //var serverClock = Dependency.Resolve<IServerClock>();
             //serverClock.StartClock();
 
             //GlobalCommandQueue.Instance.ProcessCommands();
 
             //serverClock.EndClockAndWait();
-
-            Thread.Sleep( 500 );
          }
       }
 
       private void OnClientConnected( object sender, ClientConnectedEventArgs e )
       {
-         Console.WriteLine( "Client connected: " + e.ClientConnection.IPAddress );
+         _globalConnectionTable.RegisterConnection( e.ClientConnection );
+         //Console.WriteLine( "Client connected: " + e.ClientConnection.IPAddress );
       }
 
       public void Stop()

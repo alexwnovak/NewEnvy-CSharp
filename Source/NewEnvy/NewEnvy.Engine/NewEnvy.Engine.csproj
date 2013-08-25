@@ -49,6 +49,7 @@
     <Compile Include="ClientConnectedEventArgs.cs" />
     <Compile Include="ClientConnection.cs" />
     <Compile Include="ClientManager.cs" />
+    <Compile Include="CommandEventArgs.cs" />
     <Compile Include="CommandModel\CommandBase.cs" />
     <Compile Include="CommandModel\GctCommand.cs" />
     <Compile Include="CommandModel\ICommand.cs" />
