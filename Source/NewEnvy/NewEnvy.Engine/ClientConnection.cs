@@ -56,9 +56,11 @@ namespace NewEnvy.Engine
 
       private void EndReceive( IAsyncResult ar )
       {
+         int bytesRead;
+
          try
          {
-            int bytesRead = _networkStream.EndRead( ar );
+            bytesRead = _networkStream.EndRead( ar );
          }
          catch ( IOException )
          {
@@ -67,21 +69,18 @@ namespace NewEnvy.Engine
             return;
          }
 
-         var bytes = (byte[]) ar.AsyncState;
-
-         string command = Encoding.ASCII.GetString( bytes );
-         command = command.Replace( "\r", string.Empty ).Replace( "\n", string.Empty );
-
-         int nullTerminator = command.IndexOf( '\0' );
-
-         if ( nullTerminator != -1 )
-         {
-            command = command.Substring( 0, nullTerminator );
-         }
+         var command = ParseCommand( (byte[]) ar.AsyncState, bytesRead );
 
          OnReceivedCommand( new CommandEventArgs( this, command ) );
 
          BeginReceiving();
+      }
+
+      private static string ParseCommand( byte[] bytes, int bytesRead )
+      {
+         string command = Encoding.ASCII.GetString( bytes, 0, bytesRead );
+
+         return command.Replace( "\r", string.Empty ).Replace( "\n", string.Empty );
       }
 
       protected virtual void OnReceivedCommand( CommandEventArgs e )
