@@ -6,6 +6,8 @@ namespace NewEnvy.Engine
 {
    public class ServerClock
    {
+      private DateTime _startTime;
+
       public TimeSpan ElapsedTime
       {
          get;
@@ -14,7 +16,14 @@ namespace NewEnvy.Engine
 
       public void Reset()
       {
-         ElapsedTime = TimeSpan.MinValue;
+         var dateTime = Dependency.Resolve<IDateTime>();
+
+         _startTime = dateTime.UtcNow;
+      }
+
+      public void Pulse()
+      {
+         
       }
    }
 }

@@ -19,19 +19,26 @@ namespace NewEnvy.Engine.Test
       }
 
       [TestMethod]
-      public void Reset_ResetElapsedTime_TimeIsResetToMinValue()
+      public void Reset_ResetStartTime_GetsUtcNow()
       {
+         // Setup
+
+         var dateTimeMock = new Mock<IDateTime>();
+         Dependency.RegisterInstance( dateTimeMock.Object );
+
+         // Test
+
          var serverClock = new ServerClock();
 
          serverClock.Reset();
 
          // Assert
 
-         Assert.AreEqual( TimeSpan.MinValue, serverClock.ElapsedTime );
+         dateTimeMock.Verify( dtm => dtm.UtcNow, Times.Once() );
       }
 
       //[TestMethod]
-      //public void Reset_()
+      //public void Pulse_()
       //{
       //   var utcNow = DateTime.UtcNow;
 
@@ -45,11 +52,7 @@ namespace NewEnvy.Engine.Test
 
       //   var serverClock = new ServerClock();
 
-      //   serverClock.Reset();
-
-      //   // Verify
-
-      //   dateTimeMock.Verify( dtm => dtm.UtcNow, Times.Once() );
+      //   serverClock.Pulse();
       //}
    }
 }
