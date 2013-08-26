@@ -8,10 +8,15 @@ namespace NewEnvy.Engine.Test
    [TestClass]
    public class ServerClockTest
    {
+      private Mock<IServerConfiguration> _serverConfigurationMock;
+
       [TestInitialize]
       public void Initialize()
       {
          Dependency.CreateUnityContainer();
+
+         _serverConfigurationMock = new Mock<IServerConfiguration>();
+         Dependency.RegisterInstance( _serverConfigurationMock.Object );
       }
 
       [TestMethod]
@@ -88,12 +93,11 @@ namespace NewEnvy.Engine.Test
          dateTimeMock.Setup( dtm => dtm.UtcNow ).ReturnsInOrder( noon, fiveSecondsAfterNoon );
          Dependency.RegisterInstance( dateTimeMock.Object );
 
+         _serverConfigurationMock.Setup( scm => scm.Get<int>( "HeartbeatThreshold" ) ).Returns( 1000 );
+
          // Test
 
-         var serverClock = new ServerClock
-         {
-            HeartbeatThreshold = TimeSpan.FromSeconds( 1 )
-         };
+         var serverClock = new ServerClock();
 
          serverClock.Heartbeat += ( sender, e ) =>
          {
@@ -122,12 +126,11 @@ namespace NewEnvy.Engine.Test
          dateTimeMock.Setup( dtm => dtm.UtcNow ).ReturnsInOrder( noon, fiveSecondsAfterNoon );
          Dependency.RegisterInstance( dateTimeMock.Object );
 
+         _serverConfigurationMock.Setup( scm => scm.Get<int>( "HeartbeatThreshold" ) ).Returns( 10000 );
+
          // Test
 
-         var serverClock = new ServerClock
-         {
-            HeartbeatThreshold = TimeSpan.FromSeconds( 10 )
-         };
+         var serverClock = new ServerClock();
 
          serverClock.Heartbeat += ( sender, e ) =>
          {
