@@ -7,35 +7,23 @@ namespace NewEnvy.Engine
    {
       private DateTime _startTime;
       private bool _hasReset;
-      private TimeSpan _heartbeatThreshold;
 
-      public TimeSpan ElapsedTime
+      public TimeSpan HeartbeatThreshold
       {
          get;
-         private set;
+         set;
       }
 
       public event EventHandler Heartbeat = null;
 
       public ServerClock()
       {
-         ElapsedTime = TimeSpan.FromMilliseconds( 0 );
-
-         var serverConfiguration = Dependency.Resolve<IServerConfiguration>();
-         
-         //var heartbeatThreshold = serverConfiguration.Get<int>( "HeartbeatThreshold" );
-         //_heartbeatThreshold = TimeSpan.FromMilliseconds( heartbeatThreshold );
-
-         _heartbeatThreshold = TimeSpan.FromMilliseconds( 100 );
+         HeartbeatThreshold = TimeSpan.FromMilliseconds( 100 );
       }
 
       public void Reset()
       {
-         var dateTime = Dependency.Resolve<IDateTime>();
-
-         _startTime = dateTime.UtcNow;
-
-         ElapsedTime = TimeSpan.FromMilliseconds( 0 );
+         _startTime = Dependency.Resolve<IDateTime>().UtcNow;
 
          _hasReset = true;
       }
@@ -50,9 +38,9 @@ namespace NewEnvy.Engine
          var dateTime = Dependency.Resolve<IDateTime>();
          var utcNow = dateTime.UtcNow;
 
-         var timeSinceLast = utcNow - _startTime;
+         var elapsedTime = utcNow - _startTime;
 
-         if ( timeSinceLast.TotalMilliseconds >= _heartbeatThreshold.TotalMilliseconds )
+         if ( elapsedTime.TotalMilliseconds >= HeartbeatThreshold.TotalMilliseconds )
          {
             OnHeartbeat( EventArgs.Empty );
          }

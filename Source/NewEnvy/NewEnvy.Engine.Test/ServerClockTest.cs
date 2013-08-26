@@ -20,14 +20,6 @@ namespace NewEnvy.Engine.Test
       }
 
       [TestMethod]
-      public void ElapsedTime_InitialState_ElapsedTimeIsZero()
-      {
-         var serverClock = new ServerClock();
-
-         Assert.AreEqual( TimeSpan.FromMilliseconds( 0 ), serverClock.ElapsedTime );
-      }
-
-      [TestMethod]
       public void Reset_ResetStartTime_GetsUtcNow()
       {
          // Setup
@@ -56,31 +48,6 @@ namespace NewEnvy.Engine.Test
       }
 
       [TestMethod]
-      public void Pulse_HappyPath_AddsToElapsedTime()
-      {
-         var noon = new DateTime( 2013, 8, 25, 12, 0, 0 );
-         var fiveSecondsAfterNoon = new DateTime( 2013, 8, 25, 12, 0, 5 );
-
-         // Setup
-
-         var dateTimeMock = new Mock<IDateTime>();
-         dateTimeMock.Setup( dtm => dtm.UtcNow ).ReturnsInOrder( noon, fiveSecondsAfterNoon );
-         Dependency.RegisterInstance( dateTimeMock.Object );
-
-         // Test
-
-         var serverClock = new ServerClock();
-
-         serverClock.Reset();
-
-         serverClock.Pulse();
-
-         // Assert
-
-         Assert.AreEqual( TimeSpan.FromSeconds( 5 ), serverClock.ElapsedTime );
-      }
-
-      [TestMethod]
       public void Pulse_ElapsedTimeSurpassesHeartbeatThreshold_RaisesHeartbeatEvent()
       {
          var noon = new DateTime( 2013, 8, 25, 12, 0, 0 );
@@ -93,11 +60,12 @@ namespace NewEnvy.Engine.Test
          dateTimeMock.Setup( dtm => dtm.UtcNow ).ReturnsInOrder( noon, fiveSecondsAfterNoon );
          Dependency.RegisterInstance( dateTimeMock.Object );
 
-         _serverConfigurationMock.Setup( scm => scm.Get<int>( "HeartbeatThreshold" ) ).Returns( 1000 );
-
          // Test
 
-         var serverClock = new ServerClock();
+         var serverClock = new ServerClock
+         {
+            HeartbeatThreshold = TimeSpan.FromSeconds( 1 )
+         };
 
          serverClock.Heartbeat += ( sender, e ) =>
          {
@@ -126,11 +94,12 @@ namespace NewEnvy.Engine.Test
          dateTimeMock.Setup( dtm => dtm.UtcNow ).ReturnsInOrder( noon, fiveSecondsAfterNoon );
          Dependency.RegisterInstance( dateTimeMock.Object );
 
-         _serverConfigurationMock.Setup( scm => scm.Get<int>( "HeartbeatThreshold" ) ).Returns( 10000 );
-
          // Test
 
-         var serverClock = new ServerClock();
+         var serverClock = new ServerClock
+         {
+            HeartbeatThreshold = TimeSpan.FromSeconds( 10 )
+         };
 
          serverClock.Heartbeat += ( sender, e ) =>
          {

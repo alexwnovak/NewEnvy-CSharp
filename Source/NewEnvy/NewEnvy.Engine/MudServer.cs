@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using NewEnvy.Core;
+﻿using NewEnvy.Core;
 
 namespace NewEnvy.Engine
 {
@@ -31,28 +29,22 @@ namespace NewEnvy.Engine
             serverClock.Reset();
          };
 
+         // This is our big kahuna main loop
+
          while ( IsRunning )
          {
             serverClock.Pulse();
-
-            //var serverClock = Dependency.Resolve<IServerClock>();
-            //serverClock.StartClock();
-
-            //GlobalCommandQueue.Instance.ProcessCommands();
-
-            //serverClock.EndClockAndWait();
          }
-      }
-
-      private void OnClientConnected( object sender, ClientConnectionEventArgs e )
-      {
-         _globalConnectionTable.RegisterConnection( e.ClientConnection );
-         //Console.WriteLine( "Client connected: " + e.ClientConnection.IPAddress );
       }
 
       public void Stop()
       {
          IsRunning = false;
+      }
+
+      private void OnClientConnected( object sender, ClientConnectionEventArgs e )
+      {
+         _globalConnectionTable.RegisterConnection( e.ClientConnection );
       }
    }
 }
