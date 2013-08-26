@@ -12,7 +12,7 @@ namespace NewEnvy.Engine
          private set;
       }
 
-      private GlobalConnectionTable _globalConnectionTable = new GlobalConnectionTable();
+      private readonly GlobalConnectionTable _globalConnectionTable = new GlobalConnectionTable();
 
       public void Run()
       {
@@ -22,11 +22,18 @@ namespace NewEnvy.Engine
          connectionListener.ClientConnected += OnClientConnected;
          connectionListener.StartAsync();
 
-         while ( IsRunning )
+         var serverClock = new ServerClock();
+         serverClock.Reset();
+
+         serverClock.Heartbeat += ( sender, e ) =>
          {
             _globalConnectionTable.SendAll();
+            serverClock.Reset();
+         };
 
-            Thread.Sleep( 5000 );
+         while ( IsRunning )
+         {
+            serverClock.Pulse();
 
             //var serverClock = Dependency.Resolve<IServerClock>();
             //serverClock.StartClock();

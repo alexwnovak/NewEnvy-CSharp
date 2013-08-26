@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NewEnvy.Engine
+﻿namespace NewEnvy.Engine
 {
    public class ServerConfiguration : IServerConfiguration
    {
       public T Get<T>( string name )
       {
-         throw new NotImplementedException();
+         var threshold = (object) 100000;
+
+         return (T) threshold;
       }
    }
 }

@@ -22,8 +22,11 @@ namespace NewEnvy.Engine
          ElapsedTime = TimeSpan.FromMilliseconds( 0 );
 
          var serverConfiguration = Dependency.Resolve<IServerConfiguration>();
-         var heartbeatThreshold = serverConfiguration.Get<int>( "HeartbeatThreshold" );
-         _heartbeatThreshold = TimeSpan.FromMilliseconds( heartbeatThreshold );
+         
+         //var heartbeatThreshold = serverConfiguration.Get<int>( "HeartbeatThreshold" );
+         //_heartbeatThreshold = TimeSpan.FromMilliseconds( heartbeatThreshold );
+
+         _heartbeatThreshold = TimeSpan.FromMilliseconds( 100 );
       }
 
       public void Reset()
@@ -47,9 +50,9 @@ namespace NewEnvy.Engine
          var dateTime = Dependency.Resolve<IDateTime>();
          var utcNow = dateTime.UtcNow;
 
-         ElapsedTime += ( utcNow - _startTime );
+         var timeSinceLast = utcNow - _startTime;
 
-         if ( ElapsedTime > _heartbeatThreshold )
+         if ( timeSinceLast.TotalMilliseconds >= _heartbeatThreshold.TotalMilliseconds )
          {
             OnHeartbeat( EventArgs.Empty );
          }
