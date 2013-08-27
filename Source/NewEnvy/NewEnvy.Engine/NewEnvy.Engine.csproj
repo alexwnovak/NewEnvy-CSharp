@@ -54,6 +54,8 @@
     <Compile Include="CommandModel\GctCommand.cs" />
     <Compile Include="CommandModel\ICommand.cs" />
     <Compile Include="CommandModel\QuitCommand.cs" />
+    <Compile Include="CommandProcessor.cs" />
+    <Compile Include="ConnectionState.cs" />
     <Compile Include="GlobalCommandQueue.cs" />
     <Compile Include="GlobalConnectionTable.cs" />
     <Compile Include="IClientManager.cs" />

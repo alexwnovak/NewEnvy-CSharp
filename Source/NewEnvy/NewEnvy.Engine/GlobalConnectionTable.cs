@@ -6,11 +6,10 @@ namespace NewEnvy.Engine
    public class GlobalConnectionTable
    {
       private readonly ConcurrentDictionary<int, ClientConnection> _clientConnections = new ConcurrentDictionary<int, ClientConnection>();
+      private readonly CommandProcessor _commandProcessor = new CommandProcessor();
 
       public void SendAll()
       {
-         Console.WriteLine( "Flushing for all clients" );
-
          foreach ( var keyValuePair in _clientConnections )
          {
             keyValuePair.Value.Flush();
@@ -28,7 +27,9 @@ namespace NewEnvy.Engine
 
       private void OnReceivedCommand( object sender, CommandEventArgs e )
       {
-         e.ClientConnection.Send( "Your command: " + e.Command );
+         _commandProcessor.Process( e.ClientConnection, e.Command );
+
+         //e.ClientConnection.Send( "Your command: " + e.Command );
       }
 
       private void OnClientDisconnect( object sender, ClientConnectionEventArgs e )

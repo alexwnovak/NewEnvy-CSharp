@@ -18,7 +18,7 @@ namespace NewEnvy.Engine
       public void Stop()
       {
       }
-
+      
       private void ThreadProc()
       {
          TcpListener tcpListener = null;
@@ -30,7 +30,7 @@ namespace NewEnvy.Engine
 
             while ( true )
             {
-               Console.Write( "Waiting for a connection... " );
+               Console.WriteLine( "Waiting for a connection... " );
 
                TcpClient client = tcpListener.AcceptTcpClient();
 

@@ -13,6 +13,12 @@ namespace NewEnvy.Engine
          set;
       }
 
+      public ConnectionState ConnectionState
+      {
+         get;
+         private set;
+      }
+
       private readonly TcpClient _tcpClient;
 
       public string IPAddress
@@ -36,10 +42,17 @@ namespace NewEnvy.Engine
          _tcpClient = tcpClient;
 
          _networkStream = tcpClient.GetStream();
+
+         ConnectionState = ConnectionState.Connected;
       }
 
       public void Send( string data )
       {
+         if ( !data.EndsWith( "\n" ) )
+         {
+            data += "\n";
+         }
+
          var bytes = Encoding.ASCII.GetBytes( data );
 
          _bytesWritten += bytes.Length;
@@ -82,26 +95,6 @@ namespace NewEnvy.Engine
          return command.Replace( "\r", string.Empty ).Replace( "\n", string.Empty );
       }
 
-      protected virtual void OnReceivedCommand( CommandEventArgs e )
-      {
-         var ev = ReceivedCommand;
-
-         if ( ev != null )
-         {
-            ev( this, e );
-         }
-      }
-
-      protected virtual void OnDisconnect( ClientConnectionEventArgs e )
-      {
-         var ev = Disconnected;
-
-         if ( ev != null )
-         {
-            ev( this, e );
-         }
-      }
-
       public string Receive()
       {
          string command = null;
@@ -129,6 +122,11 @@ namespace NewEnvy.Engine
 
       public void Flush()
       {
+         if ( ConnectionState != ConnectionState.Connected )
+         {
+            return;
+         }
+
          var bytes = _memoryStream.GetBuffer();
 
          try
@@ -143,6 +141,26 @@ namespace NewEnvy.Engine
 
          _bytesWritten = 0;
          _memoryStream = new MemoryStream();
+      }
+
+      protected virtual void OnReceivedCommand( CommandEventArgs e )
+      {
+         var ev = ReceivedCommand;
+
+         if ( ev != null )
+         {
+            ev( this, e );
+         }
+      }
+
+      protected virtual void OnDisconnect( ClientConnectionEventArgs e )
+      {
+         var ev = Disconnected;
+
+         if ( ev != null )
+         {
+            ev( this, e );
+         }
       }
    }
 }
