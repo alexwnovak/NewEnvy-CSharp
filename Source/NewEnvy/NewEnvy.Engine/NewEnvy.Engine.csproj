@@ -60,6 +60,7 @@
     <Compile Include="GlobalConnectionTable.cs" />
     <Compile Include="IClientManager.cs" />
     <Compile Include="IGlobalCommandQueue.cs" />
+    <Compile Include="IGlobalConnectionTable.cs" />
     <Compile Include="IServerClock.cs" />
     <Compile Include="IConnectionListener.cs" />
     <Compile Include="IServerConfiguration.cs" />

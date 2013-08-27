@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Linq;
 
 namespace NewEnvy.Engine
 {
-   public class GlobalConnectionTable
+   public class GlobalConnectionTable : IGlobalConnectionTable
    {
       private readonly ConcurrentDictionary<int, ClientConnection> _clientConnections = new ConcurrentDictionary<int, ClientConnection>();
       private readonly CommandProcessor _commandProcessor = new CommandProcessor();
@@ -28,8 +29,6 @@ namespace NewEnvy.Engine
       private void OnReceivedCommand( object sender, CommandEventArgs e )
       {
          _commandProcessor.Process( e.ClientConnection, e.Command );
-
-         //e.ClientConnection.Send( "Your command: " + e.Command );
       }
 
       private void OnClientDisconnect( object sender, ClientConnectionEventArgs e )
@@ -51,6 +50,11 @@ namespace NewEnvy.Engine
       private int GenerateConnectionId()
       {
          return _clientConnections.Keys.Count + 1;
+      }
+
+      public ClientConnection[] GetClientConnections()
+      {
+         return _clientConnections.Select( keyValuePair => keyValuePair.Value ).ToArray();
       }
    }
 }

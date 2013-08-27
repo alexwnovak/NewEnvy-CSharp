@@ -10,7 +10,12 @@ namespace NewEnvy.Engine
          private set;
       }
 
-      private readonly GlobalConnectionTable _globalConnectionTable = new GlobalConnectionTable();
+      private readonly IGlobalConnectionTable _globalConnectionTable;
+
+      public MudServer()
+      {
+         _globalConnectionTable = Dependency.Resolve<IGlobalConnectionTable>();
+      }
 
       public void Run()
       {
