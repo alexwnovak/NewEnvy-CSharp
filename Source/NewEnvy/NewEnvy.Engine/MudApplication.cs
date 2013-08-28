@@ -13,6 +13,7 @@ namespace NewEnvy.Engine
          Dependency.RegisterType<IDateTime, DateTimeAdapter>();
 
          Dependency.RegisterInstance<IGlobalConnectionTable>( new GlobalConnectionTable() );
+         Dependency.RegisterInstance<IGlobalCommandQueue>( new GlobalCommandQueue() );
          //Dependency.RegisterInstance( ClientManager.Instance );
          //Dependency.RegisterInstance( GlobalCommandQueue.Instance );
          //Dependency.RegisterType<IServerClock, ServerClock>();

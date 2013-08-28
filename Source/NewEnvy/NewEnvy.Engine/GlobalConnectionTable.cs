@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using NewEnvy.Core;
 
 namespace NewEnvy.Engine
 {
@@ -28,7 +29,9 @@ namespace NewEnvy.Engine
 
       private void OnReceivedCommand( object sender, CommandEventArgs e )
       {
-         _commandProcessor.Process( e.ClientConnection, e.Command );
+         var globalCommandQueue = Dependency.Resolve<IGlobalCommandQueue>();
+
+         globalCommandQueue.AddCommand( e.ClientConnection, e.Command );
       }
 
       private void OnClientDisconnect( object sender, ClientConnectionEventArgs e )
