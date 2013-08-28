@@ -143,6 +143,11 @@ namespace NewEnvy.Engine
          _memoryStream = new MemoryStream();
       }
 
+      public void Disconnect()
+      {
+         OnDisconnect( new ClientConnectionEventArgs( this ) );
+      }
+
       protected virtual void OnReceivedCommand( CommandEventArgs e )
       {
          var ev = ReceivedCommand;

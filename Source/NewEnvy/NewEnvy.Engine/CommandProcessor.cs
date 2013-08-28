@@ -15,6 +15,10 @@ namespace NewEnvy.Engine
          {
             DisplayGlobalCommandTable( clientConnection );
          }
+         else if ( command == "quit" )
+         {
+            Quit( clientConnection );
+         }
          else
          {
             string output = string.Format( "\"{0}\" isn't a recognized command.", command );
@@ -40,6 +44,19 @@ namespace NewEnvy.Engine
          }
 
          clientConnection.Send( stringBuilder.ToString() );
+      }
+
+      private void Quit( ClientConnection clientConnection )
+      {
+         var stringBuilder = new StringBuilder();
+         stringBuilder.AppendLine( "See ya." );
+
+         clientConnection.Send( stringBuilder.ToString() );
+
+         // Need a way to wait for flushes to ensure the output goes, and THEN act
+         // Maybe a way to stash an action in the next go around?
+
+         clientConnection.Disconnect();
       }
    }
 }
