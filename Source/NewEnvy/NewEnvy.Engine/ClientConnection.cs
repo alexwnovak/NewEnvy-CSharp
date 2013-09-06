@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using NewEnvy.Engine.Net;
 
 namespace NewEnvy.Engine
 {
@@ -37,7 +38,7 @@ namespace NewEnvy.Engine
       public event EventHandler<CommandEventArgs> ReceivedCommand = null;
       public event EventHandler<ClientConnectionEventArgs> Disconnected = null;
 
-      public ClientConnection( TcpClient tcpClient )
+      public ClientConnection( ISocketAdapter tcpClient )
       {
          _tcpClient = tcpClient;
 
