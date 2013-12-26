@@ -40,9 +40,9 @@ namespace NewEnvy.Engine
 
       public ClientConnection( ISocketAdapter tcpClient )
       {
-         _tcpClient = tcpClient;
+        // _tcpClient = tcpClient;
 
-         _networkStream = tcpClient.GetStream();
+       //  _networkStream = tcpClient.GetStream();
 
          ConnectionState = ConnectionState.Connected;
       }
