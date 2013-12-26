@@ -2,7 +2,7 @@
 {
    public class MudApplication
    {
-      public void Main()
+      public void Start()
       {
          var mudServer = new MudServer();
          mudServer.Run();

@@ -24,7 +24,7 @@ namespace NewEnvy.EntryPoint
       {
          InitDependencyInjection();
 
-         new MudApplication().Main();
+         new MudApplication().Start();
       }
    }
 }
