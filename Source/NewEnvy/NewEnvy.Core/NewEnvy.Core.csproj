@@ -49,6 +49,7 @@
     <Compile Include="DateTimeAdapter.cs" />
     <Compile Include="Dependency.cs" />
     <Compile Include="IDateTime.cs" />
+    <Compile Include="ISubsystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
