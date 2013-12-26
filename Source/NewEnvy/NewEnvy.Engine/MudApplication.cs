@@ -8,7 +8,11 @@ namespace NewEnvy.Engine
       {
          var subsystemLoader = Dependency.Resolve<ISubsystemLoader>();
 
-         subsystemLoader.LoadAll();
+         // Load logging subsystem first for logging capability
+
+         var loggingSubsystem = subsystemLoader.LoadLoggingSubsystem();
+
+         loggingSubsystem.Start();
       }
 
       public void Start()

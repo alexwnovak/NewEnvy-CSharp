@@ -14,11 +14,14 @@ namespace NewEnvy.Engine.Test
       }
 
       [TestMethod]
-      public void Start_HappyPath_SubsystemsAreLoaded()
+      public void Start_HappyPath_LoggingSubsystemIsLoaded()
       {
+         var loggingSubsystemMock = new Mock<ISubsystem>();
+         
          // Setup
 
          var subsystemLoaderMock = new Mock<ISubsystemLoader>();
+         subsystemLoaderMock.Setup( sl => sl.LoadLoggingSubsystem() ).Returns( loggingSubsystemMock.Object );
          Dependency.RegisterInstance( subsystemLoaderMock.Object );
 
          // Test
@@ -29,7 +32,8 @@ namespace NewEnvy.Engine.Test
 
          // Assert
 
-         subsystemLoaderMock.Verify( sl => sl.LoadAll(), Times.Once() );
+         subsystemLoaderMock.Verify( sl => sl.LoadLoggingSubsystem(), Times.Once() );
+         loggingSubsystemMock.Verify( ls => ls.Start(), Times.Once() );
       }
    }
 }

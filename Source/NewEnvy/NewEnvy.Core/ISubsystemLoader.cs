@@ -2,6 +2,8 @@
 {
    public interface ISubsystemLoader
    {
+      ISubsystem LoadLoggingSubsystem();
+
       ISubsystem[] LoadAll();
    }
 }
