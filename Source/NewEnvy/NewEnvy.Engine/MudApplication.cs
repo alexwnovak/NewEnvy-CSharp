@@ -4,8 +4,6 @@
    {
       public void Start()
       {
-         var mudServer = new MudServer();
-         mudServer.Run();
       }
    }
 }
