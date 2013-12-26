@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using NewEnvy.Core;
 
 namespace NewEnvy.Engine.Test
@@ -13,11 +14,22 @@ namespace NewEnvy.Engine.Test
       }
 
       [TestMethod]
-      public void Start_()
+      public void Start_HappyPath_SubsystemsAreLoaded()
       {
+         // Setup
+
+         var subsystemLoaderMock = new Mock<ISubsystemLoader>();
+         Dependency.RegisterInstance( subsystemLoaderMock.Object );
+
+         // Test
+
          var mudApplication = new MudApplication();
 
          mudApplication.Start();
+
+         // Assert
+
+         subsystemLoaderMock.Verify( sl => sl.LoadAll(), Times.Once() );
       }
    }
 }
