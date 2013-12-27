@@ -4,6 +4,8 @@
    {
       ISubsystem LoadLoggingSubsystem();
 
+      ISubsystem LoadClientSubsystem();
+
       ISubsystem[] LoadAll();
    }
 }
